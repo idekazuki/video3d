@@ -4,7 +4,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from PIL import Image
 import cv2
-from read_gulpio import EpicDataset_4_Tmodel
+from read_gulpio import EpicDataset_4_Tmodel, ImgView
 from gulpio.transforms import Scale, CenterCrop, Compose, UnitNorm
 import numpy as np
 import torch
@@ -30,11 +30,8 @@ if __name__ =="__main__":
 
     for epoch in range(opt.epoch_num):
         for batch_num, (data, label) in enumerate(dataset):
-            data = data.reshape(opt.batch_size, -1, 224, 224)
-            datat = torch.tensor(data, dtype=torch.float32)
-            img = data[0]
-            img = img.reshape(-1,opt.cropCsize[0],opt.cropCsize[0])
-            img = img.transpose(1,2,0)
+            data = data.transpose(1, 2, 3, 0)
+            print(data.shape)
 
             for i in range(opt.framesize):
-                plt.imsave('./img/e{}b{}f{}.png'.format(epoch, batch_num, i),img[:,:,i*3:i*3+
+                plt.imsave('./img/e{}b{}f{}.png'.format(epoch, batch_num, i),data[i])
