@@ -10,7 +10,7 @@ def parse_opts():
     parser.add_argument('--train_val', default=0.8, type=float, help='Ratio of training data to test data')
     parser.add_argument('--crop_position', default=0, type=int, help='Position selection when crop. 0:center, 1:4corner+center random')
     parser.add_argument('--cropSsize', default=256, type=int)
-    parser.add_argument('--cropCsize', default=[224], type=list)
+    parser.add_argument('--cropCsize', default=224, nargs="+", type=float)
     parser.add_argument('--cropRsize', default=-1)
     parser.add_argument('--framesize', default=16, type=int, help='Number of frames to get')
     parser.add_argument('--temporal-p', default=0, type=int, help='temporal sampling point 0:divdide evenly, 1:random')
