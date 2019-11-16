@@ -12,7 +12,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from opts import parse_opts
 import random
-
+from sheet import sheet
 
 if __name__ =="__main__":
     opt = parse_opts()
@@ -20,6 +20,13 @@ if __name__ =="__main__":
     opt.snippet_length = 1  # Numbertemporal_transform of frames composing the snippet, 1 for RGB, 5 for optical flow
     opt.snippet_channels = 3  # Number of channels in a frame, 3 for RGB, 2 for optical flow
 
+
+    #memory logdata
+    
+    logdata = [opt.video_root, opt.batch_size, opt.epoch_num, opt.category_num, opt.class_type, opt.train_val, opt.crop_position, opt.cropSsize, str(opt.cropCsize), opt.cropRsize, opt.framesize, opt.temporal_p, opt.horizon, opt.normalization]
+
+    #Function to pass parameter information to google spread sheet
+    sheet(logdata)
     #image proccesing parameter
    
     image_transforms = [
@@ -38,7 +45,7 @@ if __name__ =="__main__":
     for epoch in range(opt.epoch_num):
         for batch_num, (data, label) in enumerate(dataset):
             data = data.transpose(1, 2, 3, 0)
-            print(data.shape)
+            print(data.shape, batch_num)
 
             for i in range(opt.framesize):
                 plt.imsave('./img/e{}b{}f{}.jpg'.format(epoch, batch_num, i),data[i])
